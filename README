@@ -1,7 +1,7 @@
 # 🩹 Real-Time Wound Segmentation on OAK-D Lite
 
 This repository contains the complete pipeline of my graduation project, where I developed a **computer vision system for wound analysis**.  
-The system integrates **image preprocessing, automated polygon annotations, YOLOv8-based segmentation, and feature extraction** of wound regions, with final deployment on the **Luxonis OAK-D Lite camera** for **real-time inference**.
+The system integrates **image preprocessing**, **automated polygon annotations**, **YOLOv8-based segmentation**, and **feature extraction** of wound regions, with final deployment on the **Luxonis OAK-D Lite camera** for **real-time inference**.
 
 ---
 
@@ -15,67 +15,81 @@ The system integrates **image preprocessing, automated polygon annotations, YOLO
 
 - **`image_segmentation/`**  
   YOLOv8n segmentation pipeline:  
-  - Training on the prepared dataset after preprocessing and labelling
-  - Evaluation of model by viewing its metrics and confusion matrix
-  - Evaluation on test set by using model to make predictions  
+  - Training on the prepared dataset after preprocessing and labeling  
+  - Evaluation of model using metrics and confusion matrix  
+  - Testing on held-out dataset by making predictions  
   - Inference results for wound detection and segmentation  
 
 - **`feature_extraction/`**  
-  Extraction of clinically relevant shape features (area, perimeter, eccentricity, etc.) from binary wound masks to enable further medical analysis and motion planning for stitching paths generation.
+  Extraction of clinically relevant shape features (area, perimeter, eccentricity, etc.) from binary wound masks to enable further medical analysis and motion planning for stitching path generation.
 
 ---
 
 ## 🚀 Project Workflow
 
 1. **Image Preprocessing**  
-   - Resizing, Padding, Greyscale conversion, Normalisation, Filtering, CLAHE and augmentation for dataset preparation.
+   - Resizing, padding, grayscale conversion, normalization, filtering, CLAHE, and augmentation for dataset preparation.
 
 2. **Polygon Annotation (SAM)**  
    - Automated polygon-wise masks generated for wound regions.  
-   - Reduced manual labeling effort via labelme tool.
+   - Reduced manual labeling effort using the **Labelme** tool.
 
 3. **Segmentation with YOLOv8**  
-   - Trained a YOLOv8n segmentation model on the dataset.  
-   - Achieved robust segmentation performance on the test set.  
+   - Trained a **YOLOv8n segmentation model** on the dataset.  
+   - Achieved robust segmentation performance on validation and test sets.  
 
 4. **Feature Extraction**  
    - Extracted wound descriptors from binary masks.  
    - Useful for objective wound assessment.
 
 5. **Deployment on OAK-D Lite**  
-   - Model is optimized and ready for **real-time wound segmentation** using the DepthAI pipeline on the OAK-D Lite camera.
+   - Model optimized and ready for **real-time wound segmentation** using the **DepthAI pipeline** on the OAK-D Lite camera.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Languages**: Python  
-- **Frameworks & Libraries**:  
+- **Languages:** Python  
+- **Frameworks & Libraries:**  
   - [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics)  
   - [Segment Anything Model (SAM)](https://docs.ultralytics.com/models/sam/)  
   - OpenCV, NumPy, Pandas, Matplotlib  
-- **Hardware**: Luxonis **OAK-D Lite** camera (https://docs.luxonis.com/software/ros/depthai-ros/) 
+- **Hardware:** [Luxonis OAK-D Lite](https://docs.luxonis.com/software/ros/depthai-ros/)  
 
 ---
 
 ## 📊 Results
 
-- **Accurate wound segmentation ** with YOLOv8n  (95.2% mAP@50 for the wound class on the validation set, and a 93.9% recall / 85% F1-score on the test set, confirming its reliability)
-- **Automated dataset annotation** using SAM  
-- **Feature descriptors** extracted for further clinical use  
-- **Deployment-ready model** running on OAK-D Lite for real-time applications  
+### **Validation Results (YOLOv8 Evaluation)**
+| Class       | Precision | Recall | mAP@50 | mAP@50–95 |
+|-------------|-----------|--------|--------|-----------|
+| **Stitched** | 78.0%    | 79.9%  | 77.1%  | 34.3%     |
+| **Wound**    | 86.7%    | 87.2%  | **90.2%** | 63.3%  |
+| **Overall**  | 82.4%    | 83.6%  | 83.7%  | 48.8%     |
+
+➡️ The model achieved **90.2% mAP@50** for the wound class on validation data.
+
+### **Test Results (Confusion Matrix)**
+| Metric     | Wound Class |
+|------------|-------------|
+| Precision  | 77.5%       |
+| Recall     | **93.9%**   |
+| F1-Score   | 85.0%       |
+| Accuracy   | 83.4%       |
+
+➡️ On the held-out test set, the model achieved **93.9% recall** and an **85% F1-score**, confirming reliability for real-time wound segmentation.
 
 ---
 
 ## 🎯 Future Work
 
-- Integration with a robotic system for **automated wound stitching**.  
-- Enhanced feature extraction with 3D depth analysis.  
-- Clinical validation with larger datasets.  
+- Integration with a robotic system for **automated wound stitching**  
+- Enhanced feature extraction with **3D depth analysis**  
+- Clinical validation with **larger datasets**  
 
 ---
 
 ## 👨‍💻 Author
 
 **Kholoud Waleed Ali**  
-Mechatronics & Robotics Engineer | AI/ML & Computer Vision Enthusiast  
+*Mechatronics & Robotics Engineer | AI/ML & Computer Vision Enthusiast*  
